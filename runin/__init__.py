@@ -1,3 +1,3 @@
-from . import google_calendar
+from . import google_calendar, processing
 
-__all__ = ('calendar', )
+__all__ = ('calendar', 'processing')
