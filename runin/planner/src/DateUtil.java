@@ -29,7 +29,7 @@ public class DateUtil {
         ArrayList<LocalDate> dates = new ArrayList<LocalDate>();
         LocalDate mStartDate = startDate;
 
-        while(mStartDate.isBefore(endDate)){
+        while(mStartDate.isBefore(endDate) || mStartDate.equals(endDate)){
             mStartDate = mStartDate.plusDays(1);
             dates.add(mStartDate.plusDays(1));
         }

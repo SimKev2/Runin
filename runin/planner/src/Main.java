@@ -26,6 +26,5 @@ public class Main {
         System.out.println("Days: "  + days);
 
         System.out.println("Days List: " + DateUtil.getListOfDates(currentDate, endDate).toString());
-
     }
 }
