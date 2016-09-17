@@ -9,7 +9,7 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Enter an Event Date(Y/M/D): ");
+        System.out.println("Enter an Event Date(MM/DD/YY): ");
         eventDate = in.next();
 
         System.out.println("Enter the event Distance in miles: ");
@@ -24,6 +24,8 @@ public class Main {
         long days = DateUtil.getDaysBetween(currentDate, endDate);
 
         System.out.println("Days: "  + days);
+
+        System.out.println("Days List: " + DateUtil.getListOfDates(currentDate, endDate).toString());
 
     }
 }
