@@ -7,7 +7,7 @@ from . import authorization
 CALENDAR_API_URL = 'https://www.googleapis.com/calendar/v3'
 
 
-def calendar():
+def calendars():
     """
     Authorize a user and retrieve all ids of calendars they own.
 
@@ -26,7 +26,7 @@ def calendar():
     return calendar_ids
 
 
-def get(calendar_id, start_time, end_time, auth=None):
+def get_events(calendar_id, start_time, end_time, auth=None):
     """
     Retrieve all events from calendar_id between specified dates.
 

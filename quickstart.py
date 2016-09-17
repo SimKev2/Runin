@@ -1,14 +1,14 @@
 from __future__ import unicode_literals
 
-from runin.calendar.api import events
+from runin.google_calendar.api import events
 
 
 def main():
-    ids = events.calendar()
+    ids = events.calendars()
     c_events = []
     for i in ids:
         c_events.append(
-            events.event(i, '2016-09-17T12:00:00Z', '2016-09-20T00:00:00Z'))
+            events.get_events(i, '2016-09-17T12:00:00Z', '2016-09-20T00:00:00Z'))
 
     print c_events
 

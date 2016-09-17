@@ -1,3 +1,3 @@
-from . import calendar
+from . import google_calendar
 
 __all__ = ('calendar', )
