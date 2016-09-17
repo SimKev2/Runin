@@ -53,9 +53,11 @@ def free_time(cal_schedule):
             'end', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]), 23, 59, 59)))
         for i, k in zip(end[0::2], end[1::2]):
             free_events[d].append(events.CalendarEvent({
-                'startTime': i[1].utcnow().isoformat(),
-                'endTime': k[1].utcnow().isoformat(),
+                'startTime': i[1].strftime("%Y-%m-%dT%H:%M:%S"),
+                'endTime': k[1].strftime("%Y-%m-%dT%H:%M:%S"),
                 'summary': None}))
+
+    return free_events
 
 
 def event_group(start_date, end_date):
@@ -83,4 +85,5 @@ def event_group(start_date, end_date):
 
 
 if __name__ == '__main__':
-    free_time(event_group('2016-09-17T12:00:00Z', '2016-10-26T00:00:00Z'))
+    print free_time(event_group(
+        '2016-09-17T12:00:00Z', '2016-10-26T00:00:00Z'))
