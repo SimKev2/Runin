@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from collections import defaultdict
+from datetime import datetime
 
 from dateutil import parser
 
@@ -21,28 +22,66 @@ class CalendarEvent(object):
 
     @property
     def day(self):
-        """The day the event is on 2016-09-19"""
+        """The day the event is on i.e. 2016-09-19"""
         return str(self.start_time.date())
+
+    @property
+    def duration(self):
+        """The length of the CalendarEvent"""
+        return self.end_time - self.start_time
 
 
 def free_time(cal_schedule):
     """
-    Find 40+ minute times during the day (7 am - 10 pm) that are unscheduled.
+    Find times during the day that are unscheduled.
 
     Free time example return:
     {
       '2016-08-16': [
-        ('2016-08-19T07:00:00-5:00', '2016-08-19T09:00:00-5:00'),
-        ('2016-08-19T20:00:00-5:00', '2016-08-19T22:00:00-5:00')
+        CalendarEvent('2016-08-19T07:00:00-5:00', '2016-08-19T09:00:00-5:00'),
+        CalendarEvent('2016-08-19T20:00:00-5:00', '2016-08-19T22:00:00-5:00')
       ]
     }
+
+    TODO: Put more thought into algorithm as it is overly complicated
+          but functional currently.
 
     :param cal_schedule: The events on calendar stored by day.
     :type cal_schedule: dict of CalendarEvent objects
     :return: Free time for each day in cal_schedule
     :rtype: dict
     """
-    print cal_schedule
+    sorted_times = defaultdict(list)
+    for date, cal_events in cal_schedule.items():
+        for e in cal_events:
+            sorted_times[date].extend([
+                ('start', e.start_time), ('end', e.end_time)])
+
+    counter = 0
+    free = defaultdict(list)
+    for date, times in sorted(sorted_times.items(), key=lambda x: x[1]):
+        for time in times:
+            if time[0] == 'start':
+                if counter == 0:
+                    free[date].append(('end', time[1]))
+                counter += 1
+
+            elif time[0] == 'end':
+                if counter == 1:
+                    free[date].append(('start', time[1]))
+                counter -= 1
+
+    free_events = defaultdict(list)
+    for d, end in free.items():
+        end.insert(
+            0, ('start', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]))))
+        end.append((
+            'end', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]), 23, 59, 59)))
+        for i, k in zip(end[0::2], end[1::2]):
+            free_events[d].append(CalendarEvent({
+                'startTime': i[1].utcnow().isoformat(),
+                'endTime': k[1].utcnow().isoformat(),
+                'summary': None}))
 
 
 def event_group(start_date, end_date):
@@ -59,7 +98,8 @@ def event_group(start_date, end_date):
     all_events = []
     for cal in events.calendars():
         c_events = events.get_events(cal, start_date, end_date)
-        all_events.extend([CalendarEvent(e) for e in c_events])
+        all_events.extend([CalendarEvent(e) for e in c_events if e.get(
+                'startTime') is not None])
 
     day_schedule = defaultdict(list)
     for cal_e in sorted(all_events, key=lambda x: x.day):
@@ -69,4 +109,4 @@ def event_group(start_date, end_date):
 
 
 if __name__ == '__main__':
-    event_group('2016-09-17T12:00:00Z', '2016-09-20T00:00:00Z')
+    free_time(event_group('2016-09-17T12:00:00Z', '2016-10-26T00:00:00Z'))
