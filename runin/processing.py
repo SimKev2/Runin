@@ -80,7 +80,8 @@ def free_time(cal_schedule):
     free_events = defaultdict(list)
     for d, end in free.items():
         end.insert(
-            0, ('start', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]), 7, 50)))
+            0,
+            ('start', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]), 7, 50)))
         end.append((
             'end', datetime(int(d[0:4]), int(d[5:7]), int(d[-2:]), 22)))
         for i, k in zip(end[0::2], end[1::2]):
@@ -93,6 +94,13 @@ def free_time(cal_schedule):
 
 
 def main(training_file):
+    """
+    Based on the training_file data, schedule sessions in calendars free time.
+
+    :param training_file: Absolute path to training plan json file
+    :type training_file: str
+    :rtype: None
+    """
     with open(training_file, 'r') as f:
         contents = json.loads(f.read())
 
@@ -103,7 +111,8 @@ def main(training_file):
     running_events = contents.get('events')
     for r_e in running_events:
         for f in free_spots.get(r_e.get('date')):
-            run_duration = timedelta(seconds=(r_e.get('distance') * 660))
+            run_duration = timedelta(seconds=(
+                r_e.get('distance') * 11 * 60 + 900))
             if f.duration >= run_duration:
                 running_schedule.append(events.CalendarEvent({
                     'startTime': f.start_time.strftime("%Y-%m-%dT%H:%M:%S"),
