@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -34,5 +33,9 @@ public class DateUtil {
             dates.add(mStartDate.plusDays(1));
         }
         return  dates;
+    }
+
+    public static String getDateString(LocalDate date){
+        return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
     }
 }
