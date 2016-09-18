@@ -36,6 +36,9 @@ public class DateUtil {
     }
 
     public static String getDateString(LocalDate date){
-        return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
+        if(date.getMonthValue() < 10)
+            return date.getYear() + "-0" + date.getMonthValue() + "-" + date.getDayOfMonth();
+        else
+            return date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth();
     }
 }

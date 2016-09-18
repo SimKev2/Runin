@@ -15,7 +15,6 @@ public class Plan {
     String user;
     String targetDistance;
     ArrayList<Double> distanceList = new ArrayList<>();
-    ArrayList<Event> events = new ArrayList<Event>();
 
     double L = 0;
     double k = 0;
@@ -38,16 +37,19 @@ public class Plan {
         return  distanceList;
     }
 
-    public ArrayList<Event> buildEventList(ArrayList<LocalDate> dates){
+    public ArrayList<Event> buildEventList(ArrayList<LocalDate> dates, LocalDate endDate){
         ArrayList<Event> events = new ArrayList<>();
 
-        for(int i=0; i < dates.size() -1; i++){
-            String name = "Run " + distanceList.get(i) + " miles today.";
-            String date = DateUtil.getDateString(dates.get(i));
-            events.add(new Event(name, date, distanceList.get(i).toString()));
+        for(int i=0; i < dates.size() - 1; i += 2){
+            if(dates.get(i).isBefore(endDate)){
+                String name = "Run " + distanceList.get(i) + " miles today.";
+                String date = DateUtil.getDateString(dates.get(i));
+                events.add(new Event(name, date, distanceList.get(i).toString()));
+            }
+
         }
 
-        System.out.println(events.toString());
+        //System.out.println(events.toString());
 
         return events;
     }

@@ -1,16 +1,1 @@
-{
-  "startDate": "2016-09-19",
-  "endDate": "2016-09-20",
-  "events": [
-    {
-      "name": "Run 1 Mile",
-      "date": "2016-09-19",
-      "distance": 1
-    },
-    {
-      "name": "Run 2 Miles",
-      "date": "2016-09-20",
-      "distance": 2
-    }
-  ]
-}
+{"startDate":"2016-09-17", "endDate":"2016-09-30","events": [{"name":"Run 3.5 miles today.","date":"2016-09-19","distance":3.5},{"name":"Run 4.0 miles today.","date":"2016-09-21","distance":4.0},{"name":"Run 4.5 miles today.","date":"2016-09-23","distance":4.5},{"name":"Run 5.0 miles today.","date":"2016-09-25","distance":5.0},{"name":"Run 5.5 miles today.","date":"2016-09-27","distance":5.5},{"name":"Run 6.0 miles today.","date":"2016-09-29","distance":6.0}]}

@@ -31,8 +31,11 @@ public class JSONEventBuilder {
     private void addFieldToJSONString(String key, String value){
         if(key.equals("name"))
             eventString = eventString + '\"' + key + '\"' + ":" + '\"' + value + '\"';
+        else if(key.equals("distance"))
+            eventString =  eventString + ","+ '\"' + key + '\"' + ":" + value;
         else
             eventString =  eventString + ","+ '\"' + key + '\"' + ":" + '\"' + value +  '\"';
+
     }
 
     public String createJSON(){
@@ -46,7 +49,7 @@ public class JSONEventBuilder {
         eventString = eventString.substring(0, eventString.lastIndexOf(','));
 
 
-        jsonString = "\"event\": [" + eventString + "]";
+        jsonString = "\"events\": [" + eventString + "]";
         jsonString = "\"startDate\":" + '\"' + startDate  + '\"' +  ", \"endDate\":"  + '\"' + endDate  + '\"' + "," + jsonString;
 
         return "{" + jsonString + "}";

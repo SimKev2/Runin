@@ -110,7 +110,7 @@ def main(training_file):
     running_schedule = []
     running_events = contents.get('events')
     for r_e in running_events:
-        for f in free_spots.get(r_e.get('date')):
+        for f in free_spots.get(r_e.get('date'), {}):
             run_duration = timedelta(seconds=(
                 r_e.get('distance') * 11 * 60 + 900))
             if f.duration >= run_duration:
