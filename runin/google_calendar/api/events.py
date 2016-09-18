@@ -119,8 +119,6 @@ def create_event(event, auth=None):
     if not auth:
         auth = authorization.auth_headers()
 
-    print event.start_time.strftime("%Y-%m-%dT%H:%M:%S")
-
     g_event = {
         'end': {
             'dateTime': event.end_time.strftime("%Y-%m-%dT%H:%M:%S"),
